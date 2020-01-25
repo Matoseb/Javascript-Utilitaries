@@ -13,21 +13,23 @@ const UTILS = {
 	},
 
 	DeferredPromise: function() {
-        let res, rej, p = new Promise(function(resolve, reject) {
+        let res;
+        let rej;
+        let p = new Promise(function(resolve, reject) {
             res = resolve;
             rej = reject;
         });
 
-        p.state = 'pending';
+        p._state = 'pending';
 
-        p.resolve = a => {
-            p.state = 'resolved';
-            res.call(a)
+        p._resolve = a => {
+            p._state = 'resolved';
+            res.call(a);
         }
 
-        p.reject = a => {
-            p.state = 'rejected';
-            rej.call(a)
+        p._reject = a => {
+            p._state = 'rejected';
+            rej.call(a);
         }
 
         return p;
