@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Utiliaties Functions for Javascript</title>
+	<style>
+		html, body {
+			
+			margin: 0;
+			height: 100%;
+			width: 100%;
+		}		
+
+		.hidden {
+			display: none;
+		}
+
+		.node-elem {
+			/*text-transform: capitalize;*/
+			cursor: pointer;
+		}
+
+		.node-elem:not(:hover) {
+			box-shadow: none;
+		}
+
+		.node-elem:hover {
+			background: white;
+		}
+
+		.node-elem:hover:active {
+			background: black;
+			color: white;
+		}
+
+		.node-elem.main {
+			font-weight: bold;
+			/*box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);*/
+		}
+
+		.node-container > div{
+			margin: 5px;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);
+			box-sizing: border-box;
+			border-radius: 5px;
+			padding: 20px;
+		}
+
+		.node-container {
+			font-family: helvetica, sans-serif;
+			box-sizing: border-box;
+			padding: 50px;
+			top: 0;
+			left: 0;
+			width: 100%;
+			position: relative;
+			display: flex;
+			flex-flow: wrap;
+		}
+
+	</style>
+	<!-- <script src="./utils.js"></script> -->
+</head>
+
+<body>
+	<section class="node-container">
+		<div class="node-elem model">hello</div>
+	</section>
+	<script type="text/javascript">
+		'use strict';
+		
+		let UTILS;
+		window.addEventListener('load', async function() {
+
+			const DOM = {
+				nodeContainer: document.querySelector('.node-container'),
+				nodes: {},
+				nodeModel: document.querySelector('.node-container .model'),
+			}
+
+			let script = await fetch("./utils.js");
+			let UTILS_STRING = await script.text();
+			UTILS = new Function(`${UTILS_STRING}; return UTILS;`)();
+
+			let flConsole = FloatingConsole;
+	        //remove 
+	        DOM.nodeModel.classList.remove('hidden');
+	        DOM.nodeModel.classList.remove('model');
+	        DOM.nodeModel.parentElement.removeChild(DOM.nodeModel);
+
+	        addNodes();
+	        setClick();
+
+	        function addNodes() {
+	        	let mainNode = createNode(DOM.nodeContainer, { model: DOM.nodeModel, textContent: 'UTILS.js', tooltip: UTILS_STRING });
+	        	mainNode.classList.add('main');
+
+	        	for (let funcName in UTILS) {
+	        		let funcBody = UTILS[funcName].toString();
+	        		let code = 'let ' + funcName + ' = ' + funcBody;
+
+	        		createNode(DOM.nodeContainer, { model: DOM.nodeModel, textContent: funcName, tooltip: code });
+	        	}
+
+	        }
+
+	        function createNode(parent, opts) {
+
+	        	const o = Object.assign({
+	        		textContent: '',
+	        		tooltip: '',
+	        		model: null,
+	        		classes: []
+	        	}, opts);
+
+	        	let node;
+
+	        	if (o.model !== null) {
+	        		node = o.model.cloneNode(true);
+	        	} else {
+	        		node = document.createElement('div');
+	        	}
+
+	        	node.setAttribute('title', o.tooltip);
+	        	node.textContent = o.textContent;
+
+	        	for (let cl of o.classes) {
+	        		node.classList.add(cl);
+	        	}
+
+	        	parent.appendChild(node);
+
+	        	return node;
+	        }
+
+	        function setClick() {
+	        	DOM.nodeContainer.addEventListener('click', function(e) {
+
+	        		if(!e.target.classList.contains('node-elem'))
+	        			return;
+
+	        		let node = e.target;
+	        		let name = node.textContent;
+	        		let code = node.getAttribute('title');
+	        		let msg = `<i>${name}</i> copied to clipboard!`;
+
+	        		copyToClipboard(code, successCopy.bind(this, msg));
+
+	        	}, true);
+	        }
+
+	        function successCopy(msg) {
+	        	new flConsole({innerHTML: msg, parent: DOM.nodeContainer});
+	        }
+
+	        function copyToClipboard(text, callback) {
+
+	        	if(!text)
+	        		return;
+
+	        	window.navigator.clipboard.writeText(text).then(callback, function(err) {console.log('Error copying to your clipboard :(')});
+	        }
+	    });
+
+		//WIP
+		class FloatingConsole {
+
+			constructor(options) {
+				//set "this" properties with added options + default values
+				Object.assign(this, {
+					parent:document.body,
+					innerHTML: '',
+				}, options);
+
+				this.createAnimation();
+				// this.forceRendering(); //force render
+				this.createDom();
+			}
+
+			
+
+			addAnimation() {
+				let settings = {
+					"name": this.animName,
+					"direction": "normal",
+					"duration": "1s",
+					"fill-mode": "none",
+					"iteration-count": 1,
+					"play-state": "running",
+					"timing-function": "ease-in-out",
+				}
+
+				//add suffix to keys
+				let animProps = {};
+				for (let key in settings) {
+					let animKey = 'animation-' + key;
+					let value = settings[key];
+					animProps[animKey] = value;
+				}
+
+				return this.stringifyStyle(animProps);
+			}
+
+			createDom() {
+
+				let style = {
+					"bottom": 0,
+					"left": 0,
+					"position": "fixed",
+					"background": "black",
+					"color": "white",
+					"margin": "20px",
+					"opacity": 0,
+					"transform": "translateY(100%)",
+				}
+
+				this.elem = document.createElement('div');
+				this.elem.style.cssText = this.stringifyStyle(style);
+				this.elem.innerHTML = this.innerHTML;
+				this.parent.appendChild(this.elem);
+				// this.forceRendering();
+				this.manageListener('add');
+
+				this.elem.style.cssText += this.addAnimation();
+				
+			}
+
+			createAnimation() {
+				this.animName = 'animSheet' + Date.now();
+
+				let keyframes = {
+					'0%': {},
+					'20%, 80%': {"transform": "translateY(0%)", "opacity": "100%"},
+					'100%': {},
+				}
+
+				let sortedKeys = Object.keys(keyframes).sort();
+				let stringKeyFrames = '';
+
+				for (let key of sortedKeys) {
+					let props = keyframes[key];
+					stringKeyFrames += `${key} {${this.stringifyStyle(props)}}`;
+				}
+
+				//add @keyframe
+				this.domSheet = document.createElement('style');
+				this.domSheet.textContent = `@keyframes ${this.animName} {${stringKeyFrames}}`;
+
+				document.head.appendChild(this.domSheet);
+			}
+
+			stringifyStyle(styleObj) {
+
+				let string = '';
+
+				for (let prop in styleObj) {
+					let value = styleObj[prop];
+					string += this.stringifyProp(prop, value);
+				}
+
+				return string;
+			}
+
+			forceRendering() {
+				document.body.offsetWidth;
+			}
+
+			stringifyProp(prop, value) {
+				return `${prop}:${value};`;
+			}
+
+			onEnd(e) {
+				if (e.target !== this.elem)
+					return;
+
+				this.manageListener('remove');
+				this.removeElement(this.domSheet);
+				this.removeElement(this.elem);
+			}
+
+			removeElement(dom) {
+				dom.parentElement.removeChild(dom);
+			}
+
+			manageListener(action) {
+				this.elem[action + 'EventListener']('animationend', this.onEnd.bind(this), true);
+			}
+
+		}
+
+	</script>
+</body>
+
+</html>

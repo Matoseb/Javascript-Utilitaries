@@ -1,3 +1,5 @@
+'use strict';
+
 const UTILS = {
 
 	isMobile: function() {
@@ -47,8 +49,12 @@ const UTILS = {
         return Math.min(Math.max(num, min), max);
     },
 
-	modulo: function(num, mod) {
+	trueModulo: function(num, mod) {
     	return ((num % mod) + mod) % mod; //modulo operator, same as js remainder. but works with negative numbers.
+    },
+
+    quotient: function(n, m) {
+    	return ~~(n/m) * m;
     },
 
     dist: function(x1, y1, x2, y2) {
@@ -56,7 +62,7 @@ const UTILS = {
     },
 
     //needs to be refactored, or https://www.f-sp.com/entry/2017/04/07/002913
-    smoothDamp(current, target, refVelocity, maxSpeed = 10, smoothTime = 0.2, deltaTime) {
+    smoothDamp: function(current, target, refVelocity, maxSpeed = 10, smoothTime = 0.2, deltaTime) {
         let num = 2 / (smoothTime || 0.00001);
         let num2 = num * deltaTime;
         let num3 = 1 / (1 + num2 + 0.48 * num2 * num2 + 0.235 * num2 * num2 * num2);
@@ -76,7 +82,7 @@ const UTILS = {
     },
 
     //shift ES6 MAP just like Array.shift()
-    shiftMap(map) {
+    shiftMap: function(map) {
         let result = map.entries().next().value;
         if (result !== undefined) {
             map.delete(result[0]);
@@ -84,13 +90,13 @@ const UTILS = {
         }
     },
     //rename a ES6 MAP key
-    renameMap(map, oldKey, newKey) {
+    renameMap: function(map, oldKey, newKey) {
         map.set(newKey, map.get(oldKey));
         return map.delete(oldKey);
     },
 
     //push a number into an ordered array
-    arraySortedPush(array, value) {
+    arraySortedPush: function(array, value) {
         let low = 0,
             high = array.length;
 
