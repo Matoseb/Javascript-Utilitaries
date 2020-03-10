@@ -27,7 +27,7 @@ const UTILS = {
 
         let matrix = opts.matrix || opts.context.getTransform();
         let imatrix = matrix.invertSelf();
-        let px = opts.context.pixelDensity;
+        let px = opts.pixelDensity;
 
         x *= px;
         y *= px;
