@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script type="text/javascript" src="domToPng.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        /*background: white;*/
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: lightgray;
+    }
+
+    #container {}
+
+    .scroll {
+        height: 150px;
+        width: 250px;
+        box-shadow: inset 0 0 10px black;
+        background: red;
+    }
+
+    #render {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="scroll">hello</div>
+    </div>
+    <input id="render"
+       type="button"
+       value="Render">
+    <script>
+        document.querySelector('#render').addEventListener('click', function() {
+            captureDom(document.querySelector('#container'));
+        });
+    </script>
+    <!-- <div class="ff40 osx10 _btn b home" data-b="" onclick="capture(this, [0])"></div> -->
+</body>
+
+</html>
