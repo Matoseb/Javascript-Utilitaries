@@ -5,7 +5,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(innerWidth, innerHeight);
+  createCanvas(windowWidth, windowHeight);
   stroke('red');
   noFill();
 }
