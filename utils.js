@@ -119,7 +119,7 @@ const UTILS = {
   },
 
   //needs refactoring
-  screenToWorld: function (x, y, opts) {
+  screenToWorld: function (x, y, opts = {}) {
     opts = {
       pixelDensity: window.devicePixelRatio,
       ctx: drawingContext,
