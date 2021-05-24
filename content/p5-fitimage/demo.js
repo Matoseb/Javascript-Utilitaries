@@ -17,6 +17,7 @@ function draw() {
 
   // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'fill', 'top', 'right'));
   // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'fill', 'top', 'right'));
+  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'fill', '0.2', '0.9')); // 20%, 90%
 
   rect(0,0,mouseX, mouseY);
 }
