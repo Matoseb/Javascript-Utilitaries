@@ -321,5 +321,5 @@ export default UTILS = {
   pushToSortedArray,
 };
 
-if (document.currentScript && 'noModule' in document.currentScript)
+if (document.currentScript.noModule)
   globalThis.UTILS = UTILS;
