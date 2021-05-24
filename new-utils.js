@@ -2,7 +2,7 @@
 /**
  * Check if is is mobile or dekstop browser.
  */
-export function isMobile() {
+function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     window.navigator.userAgent
   );
@@ -10,7 +10,7 @@ export function isMobile() {
 /**
  * Fit Image for p5 image()
  */
-export function fitImage(
+function fitImage(
   p5Image,
   x,
   y,
@@ -84,16 +84,16 @@ export function fitImage(
   return [p5Image, dx, dy, dw, dh, sx, sy, sw, sh];
 }
 
-export function noop() {}
+function noop() {}
 
-export async function delay(millis = 0) {
+async function delay(millis = 0) {
   return new Promise((resolve) => globalThis.setTimeout(resolve, millis));
 }
 
 /**
  * Fit Image for p5 image()
  */
-export class Spring {
+class Spring {
   constructor(options = {}) {
     const defaults = {
       position: 0,
@@ -123,7 +123,7 @@ export class Spring {
 }
 
 //   //needs refactoring
-export function screenToWorld(x, y, opts = {}) {
+function screenToWorld(x, y, opts = {}) {
   opts = {
     pixelDensity: window.devicePixelRatio,
     ctx: drawingContext,
@@ -143,7 +143,7 @@ export function screenToWorld(x, y, opts = {}) {
   };
 }
 
-export function DeferredPromise() {
+function DeferredPromise() {
   let res;
   let rej;
   const p = new Promise((resolve, reject) => {
@@ -166,11 +166,11 @@ export function DeferredPromise() {
   return p;
 }
 
-export function map(num, start1, stop1, start2, stop2) {
+function map(num, start1, stop1, start2, stop2) {
   return ((num - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
 }
 
-export function lerp(a, b, t) {
+function lerp(a, b, t) {
   return t * (b - a) + a;
 }
 /**
@@ -180,7 +180,7 @@ export function lerp(a, b, t) {
  * @param {number} t amount
  * @returns {number} between 0 and 1
  */
-export function invLerp(a, b, t) {
+function invLerp(a, b, t) {
   return (t - a) / (b - a);
 }
 /**
@@ -190,7 +190,7 @@ export function invLerp(a, b, t) {
  * @param {number} t amount
  * @returns {number}
  */
-export function eerp(a, b, t) {
+function eerp(a, b, t) {
   return a * Math.pow(b / a, t);
 } // @freyaholmer, @khyperia
 /**
@@ -200,7 +200,7 @@ export function eerp(a, b, t) {
  * @param {number} t amount
  * @returns {number}
  */
-export function lerpScale(a, b, t) {
+function lerpScale(a, b, t) {
   return 1 / (t * (1 / b - 1 / a) + 1 / a);
 }
 /**
@@ -210,7 +210,7 @@ export function lerpScale(a, b, t) {
  * @param {number} [b=1] max
  * @returns {number}
  */
-export function clamp(num, a = 0, b = 1) {
+function clamp(num, a = 0, b = 1) {
   if (a > b) [a, b] = [b, a];
   return Math.min(Math.max(num, a), b);
 }
@@ -220,16 +220,16 @@ export function clamp(num, a = 0, b = 1) {
  * @param {number} mod
  * @returns {number}
  */
-export function mod(num, mod) {
+function mod(num, mod) {
   return ((num % mod) + mod) % mod;
-} 
+}
 /**
  * Get closest integer dividend
  * @param {number} num dividend
  * @param {number} mod divisor
  * @returns {number}
  */
-export function quotient(num, m) {
+function quotient(num, m) {
   return ~~(num / m) * m;
 }
 /**
@@ -240,12 +240,12 @@ export function quotient(num, m) {
  * @param {number} y2 point2 y coordinate
  * @returns {number}
  */
-export function dist(x1, y1, x2, y2) {
+function dist(x1, y1, x2, y2) {
   return Math.hypot(x1 - x2, y1 - y2);
 }
 
 //needs to be refactored, or https://www.f-sp.com/entry/2017/04/07/002913
-export function smoothDamp(
+function smoothDamp(
   current,
   target,
   refVelocity,
@@ -272,7 +272,7 @@ export function smoothDamp(
 }
 
 //shift ES6 MAP just like Array.shift()
-export function shiftMap(map) {
+function shiftMap(map) {
   const result = map.entries().next().value;
   if (result !== undefined) {
     map.delete(result[0]);
@@ -280,12 +280,12 @@ export function shiftMap(map) {
   }
 }
 //rename a ES6 MAP key
-export function renameMap(map, oldKey, newKey) {
+function renameMap(map, oldKey, newKey) {
   map.set(newKey, map.get(oldKey)).delete(oldKey);
 }
 
 //push a number into an ordered array
-export function pushToSortedArray(array, value) {
+function pushToSortedArray(array, value) {
   let low = 0,
     high = array.length;
 
@@ -297,3 +297,30 @@ export function pushToSortedArray(array, value) {
   array.splice(low, 0, value);
   return array;
 }
+
+const UTILS = {
+  isMobile,
+  fitImage,
+  noop,
+  delay,
+  Spring,
+  screenToWorld,
+  DeferredPromise,
+  map,
+  lerp,
+  invLerp,
+  eerp,
+  lerpScale,
+  clamp,
+  mod,
+  quotient,
+  dist,
+  smoothDamp,
+  shiftMap,
+  renameMap,
+  pushToSortedArray,
+};
+
+globalThis.UTILS = UTILS;
+
+export default UTILS;
