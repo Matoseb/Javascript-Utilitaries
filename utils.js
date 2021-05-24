@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const UTILS = {
   isMobile: function () {
@@ -13,17 +13,16 @@ const UTILS = {
     y,
     w,
     h,
-    fit = "cover", /* "contain" | "fill" */
-    ay = "center", /* "left" | "right" | 0-1 */
-    ax = "center" /* "top" | "bottom" | 0-1 */
+    fit = 'cover' /* "contain" | "fill" */,
+    ay = 'center' /* "left" | "right" | 0-1 */,
+    ax = 'center' /* "top" | "bottom" | 0-1 */
   ) {
-
     const alignments = {
-      ["center"]: 0.5,
-      ["top"]: 0,
-      ["bottom"]: 1,
-      ["left"]: 0,
-      ["right"]: 1,
+      ['center']: 0.5,
+      ['top']: 0,
+      ['bottom']: 1,
+      ['left']: 0,
+      ['right']: 1,
     };
 
     let dx = x,
@@ -43,7 +42,7 @@ const UTILS = {
     ay = ay in alignments ? alignments[ay] : ay;
 
     switch (fit) {
-      case "contain":
+      case 'contain':
         let b = 0;
 
         if (_curElement._imageMode === CORNERS) {
@@ -66,7 +65,7 @@ const UTILS = {
         }
 
         break;
-      case "cover":
+      case 'cover':
         if (dr > ir) {
           sw = ih / dr;
           sx = (iw - sw) * ax;
@@ -75,9 +74,11 @@ const UTILS = {
           sy = (ih - sh) * ay;
         }
         break;
-      case "fill":
+      case 'fill':
       default:
     }
+
+    return [p5Image, dx, dy, dw, dh, sx, sy, sw, sh];
   },
 
   noop: function () {},
@@ -148,15 +149,15 @@ const UTILS = {
       rej = reject;
     });
 
-    p._state = "pending";
+    p._state = 'pending';
 
     p._resolve = (a) => {
-      p._state = "resolved";
+      p._state = 'resolved';
       res.call(a);
     };
 
     p._reject = (a) => {
-      p._state = "rejected";
+      p._state = 'rejected';
       rej.call(a);
     };
 

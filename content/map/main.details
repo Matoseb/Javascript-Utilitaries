@@ -1,9 +1,9 @@
 /*
 ---
-name: Request.HTML - jsFiddle/Github integration demo
-description: jsFiddle demo hosted on Github using HTML Request to get Ajax data
+name: Javascript Utils - p5 fitImage
+description: Fit Image into a container
 authors:
-  - Piotr Zalewa
+  - Sébastien Matos
 resources:
   - /js/empty.js
   - /css/normalize.css
