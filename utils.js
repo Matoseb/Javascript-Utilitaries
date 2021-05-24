@@ -120,6 +120,7 @@ const UTILS = {
 
   //needs refactoring
   screenToWorld: function (x, y, opts = {}) {
+
     opts = {
       pixelDensity: window.devicePixelRatio,
       ctx: drawingContext,
@@ -127,12 +128,11 @@ const UTILS = {
       ...opts
     };
 
-    let matrix = opts.matrix || opts.ctx.getTransform();
-    let imatrix = matrix.invertSelf();
-    let px = opts.pixelDensity;
+    const matrix = opts.matrix || opts.ctx.getTransform();
+    const imatrix = matrix.invertSelf();
 
-    x *= px;
-    y *= px;
+    x *= opts.pixelDensity;
+    y *= opts.pixelDensity;
 
     return {
       x: x * imatrix.a + y * imatrix.c + imatrix.e,
