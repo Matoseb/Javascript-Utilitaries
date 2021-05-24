@@ -298,7 +298,7 @@ function pushToSortedArray(array, value) {
   return array;
 }
 
- const UTILS = {
+const UTILS = {
   isMobile,
   fitImage,
   noop,
@@ -324,4 +324,5 @@ function pushToSortedArray(array, value) {
 // if (document.currentScript.noModule)
 console.log(document.currentScript);
 globalThis.UTILS = UTILS;
+
 export default UTILS;
