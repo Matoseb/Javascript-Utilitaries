@@ -1,0 +1,28 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        const data = await fetch(
+          'https://api.github.com/repos/Matoseb/Javascript-Utilitaries/git/trees/master?recursive=1'
+        ).then((resp) => resp.json());
+
+        console.log(data)
+
+        // let htmlString = '<ul>';
+        // for (let file of data) {
+        //   htmlString += `<li><a href="${file.path}">${file.name}</a></li>`;
+        // }
+
+        // htmlString += '</ul>';
+        // document.querySelector('#result').innerHTML = htmlString;
+      })();
+    </script>
+    <div id="result"></div>
+  </body>
+</html>
