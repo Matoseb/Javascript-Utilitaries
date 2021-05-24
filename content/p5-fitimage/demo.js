@@ -16,9 +16,9 @@ function draw() {
   // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'contain'));
   // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'fill'));
 
-  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'contain', 'top', 'right'));
-  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'contain', 'top', 'right'));
-  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'contain', '0.2', '0.8')); // 20% top and 80% left
+  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'cover', 'top', 'right'));
+  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'cover', 'bottom', 'left'));
+  // image(...UTILS.fitImage(MAIN_IMG, 0, 0, mouseX, mouseY, 'cover', '0.2', '0.8')); // 20% top and 80% left
 
   rect(0,0,mouseX, mouseY);
 }
