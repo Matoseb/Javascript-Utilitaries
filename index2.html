@@ -1,0 +1,43 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Utility</title>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/11.0.1/markdown-it.min.js "
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.1/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+    <script type="module" src="js/main.js" defer></script>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <main id="App">
+      <ul>
+        <li v-for="(article) in utilities">
+          <article>
+            <h2>{{article.name}}</h2>
+            <button @click="copyTextToClipboard(article)">copy</button>
+            <Markdown>{{article.description}}</Markdown>
+            <ul>
+              <li v-for="{url, name} in article.examples" :key="name">
+                <a target="_blank" rel="noreferrer noopener" :href="url"
+                  >name</a
+                >
+              </li>
+            </ul>
+          </article>
+        </li>
+      </ul>
+      <aside class="log-container">
+        <transition-group name="log">
+          <article class="log" v-for="{text, time} in logs" :key="time">
+            {{text}}
+          </article>
+        </transition-group>
+      </aside>
+    </main>
+  </body>
+</html>
