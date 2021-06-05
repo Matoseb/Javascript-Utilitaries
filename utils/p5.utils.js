@@ -13,6 +13,18 @@ export function screenToWorld(x, y, p5Canvas = globalThis) {
   return CANVAS.screenToWorld(x, y, { ctx, pixelDensity })
 }
 
+export function skew(x, y, p5Canvas = globalThis) {
+  const { _pInst } = p5Canvas._renderer
+  if (_pInst._angleMode === 'degrees') {
+    y = p5Canvas.radians(y)
+    x = p5Canvas.radians(x)
+  }
+  //prettier-ignore
+  CANVAS.skew(x, y, {ctx: _pInst.drawingContext})
+
+  return _pInst
+}
+
 /**
  * Fit Image for p5 image()
  */

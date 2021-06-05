@@ -14,3 +14,6 @@ export function screenToWorld(x, y, opts = {}) {
     y: x * imatrix.b + y * imatrix.d + imatrix.f,
   }
 }
+export function skew(x, y, { ctx }) {
+  return ctx.transform(1, Math.tan(y), Math.tan(x), 1, 0, 0)
+}
