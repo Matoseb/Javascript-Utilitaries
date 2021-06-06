@@ -1,4 +1,3 @@
-
 export function map(num, start1, stop1, start2, stop2) {
   return ((num - start1) / (stop1 - start1)) * (stop2 - start2) + start2
 }
@@ -75,4 +74,16 @@ export function quotient(num, m) {
  */
 export function dist(x1, y1, x2, y2) {
   return Math.hypot(x1 - x2, y1 - y2)
+}
+
+export function random(min = 1, max) {
+  if (typeof min === 'object') {
+    const arr = Object.values(min)
+    const index = Math.floor(Math.random() * arr.length)
+    return arr[index]
+  }
+
+  if (max === undefined) [min, max] = [0, min]
+
+  return Math.random() * (max - min) + min
 }

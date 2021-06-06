@@ -2,13 +2,6 @@
 /**
  * Check if is is mobile or dekstop browser.
  */
-export function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    window.navigator.userAgent
-  )
-}
-
-export function noop() {}
 
 /**
  * Fit Image for p5 image()
@@ -67,71 +60,4 @@ export function smoothDamp(
     refVelocity.value = (num8 - num5) / deltaTime
   }
   return num8
-}
-
-//
-/**
- * Shift ES6 Maps like Array.shift()
- * @param {Map<String, Object>} map point1 x coordinate
- * @returns {number}
- */
-export function shiftMap(map) {
-  const result = map.entries().next().value
-  if (result === undefined) return null
-  map.delete(result[0])
-  return result
-}
-//rename a ES6 MAP key
-export function renameMap(map, oldKey, newKey) {
-  map.set(newKey, map.get(oldKey)).delete(oldKey)
-}
-
-//push a number into an ordered array
-export function optiPushToSortedArray(array, value) {
-  let low = 0,
-    high = array.length
-
-  while (low < high) {
-    let mid = (low + high) >>> 1
-    if (array[mid] < value) low = mid + 1
-    else high = mid
-  }
-  array.splice(low, 0, value)
-  return array
-}
-
-export function pushToSortedArray(array, value, compareFn) {
-  array.push(value)
-  return array.sort(compareFn)
-}
-
-export function range(start = 0, stop, step = 1) {
-  if (stop === undefined) [start, stop] = [0, start]
-
-  start -= step
-  return {
-    [Symbol.iterator]: () => ({
-      next: () => ({
-        value: (start += step),
-        done: start >= stop,
-      }),
-    }),
-  }
-}
-
-export function getRange(start, stop, step) {
-  return [...range(start, stop, step)]
-}
-export function reverse(arr) {
-  return {
-    [Symbol.iterator]() {
-      let i = arr.length
-      return {
-        next: () => ({
-          value: arr[--i],
-          done: i < 0,
-        }),
-      }
-    },
-  }
 }

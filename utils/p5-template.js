@@ -1,5 +1,7 @@
 import * as UTILS from './p5.utils.js'
-import { GUI } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/libs/dat.gui.module.js'
+import { delay } from './async.utils.js'
+import { cssDuoTone } from './color.utils.js'
+// import { GUI } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/libs/dat.gui.module.js'
 
 const PARAMS = {
   skewx: 30,
@@ -7,53 +9,49 @@ const PARAMS = {
   angle: 30,
 }
 
-let div
-let g;
+// window.onload = () => {
+//   const img = new Image()
+//   img.src = '../resources/grid-tv.jpg'
+//   document.body.appendChild(img)
+//   img.style.filter = cssDuoTone('white', 'red');
+//   console.log()
+// }
+let g, img
+
+window.preload = () => {
+  img = loadImage('../resources/grid-tv.jpg')
+}
 
 window.setup = () => {
-  const gui = new GUI()
+  // console.log(p[1])
+  // const gui = new GUI()
 
-  gui.add(PARAMS, 'skewx').min(-75).max(75)
-  gui.add(PARAMS, 'skewy').min(-75).max(75)
-  gui.add(PARAMS, 'angle').min(0).max(360)
-
+  // gui.add(PARAMS, 'skewx').min(-75).max(75)
+  // gui.add(PARAMS, 'skewy').min(-75).max(75)
+  // gui.add(PARAMS, 'angle').min(0).max(360)
+  noFill()
   createCanvas(windowWidth, windowHeight)
-  angleMode(DEGREES)
-  fill('#eee')
-  rectMode(CENTER)
+  imageMode(CORNERS)
+  rectMode(CORNERS)
+  // g = createGraphics(windowWidth, windowHeight)
 }
 
 window.draw = () => {
-  const { skewx, skewy, angle } = PARAMS
-  push()
-  clear()
-  translate(width / 2, height / 2)
+  background(255)
 
-  push();
-  rotate(-angle)
-  UTILS.skew(angle, 0)
-  scale(1, 0.86062)
-  rect(0, 0, 100, 100)
-  pop();
+  let x, y
+  ;({ x, y } = UTILS.screenToWorld(mouseX, mouseY))
+  // ;({ x, y } = { x: mouseX, y: mouseY })
 
-  push();
-  translate(0,100)
-  rotate(30)
-  translate(-50, 0)
-  UTILS.skew(angle, 0)
-  scale(1, 0.86062)
-  rect(0, 0, 100, 100)
-  pop();
+  UTILS.fitImage(img, (width / 3) * 2, height / 2, x, y, {
+    fitMode: 'contain',
+    alignX: 0.5,
+    alignY: 0,
+  })
+  rect((width / 3) * 2, height / 2, x, y)
 
-  push();
-  translate(0,100)
-  rotate(-30)
-  translate(50, 0)
-  UTILS.skew(-angle, 0)
-  scale(1, 0.86062)
-  rect(0, 0, 100, 100)
-  pop();
+  // image(img, width / 3, height / 2, x, y)
+  // rect(width / 3, height / 2, x, y)
 
-
-  pop()
+  // UTILS.grid(0,100,mouseX,mouseY, 2, 2)
 }
